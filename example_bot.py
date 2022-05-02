@@ -36,9 +36,7 @@ class MyClient(discord.Client):
     async def translate_message(self, message):
         if translator.detect(message.content).lang != "en":
             translated = translator.translate(message.content, "en")
-            await message.reply(f'> *{message.content}*\n{translated.text}', mention_author=False)
-
-
+            await message.reply(f'> *{message.content}*\n`{translated.dest} to {translated.src}`\n{translated.text}', mention_author=False)
 
 
 
