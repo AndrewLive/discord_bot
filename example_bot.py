@@ -17,11 +17,19 @@ class MyClient(discord.Client):
         if message.author == client.user:
             return
 
-        print(message.content)
+        print('Message from {0.author}: {0.content}'.format(message))
         await message.channel.send('Message from {0.author}: {0.content}'.format(message))
 
 
 client = MyClient()
 
-TOKEN = 'OTcwNTEzODY5MDUzMjUxNjE2.Ym9DeQ.zMMdSZ9m6b2-U9H2Vcx20VyXEw0'
+# Read file to get the bot token
+# format is token: <token here> on the first line of the file
+config_file = open("discord_bot\example_bot.config", "r")
+
+TOKEN = config_file.readline().split()[1]
+print(TOKEN)
+
+config_file.close()
+
 client.run(TOKEN)
