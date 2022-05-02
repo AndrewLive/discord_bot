@@ -9,3 +9,11 @@ for i in deez_nuts_file.readlines():
 deez_nuts_file.close()
 
 print(deez_nuts_dict)
+
+
+
+from googletrans import Translator
+
+translator = Translator()
+
+print(translator.translate('うちのまえにきてください。'))
