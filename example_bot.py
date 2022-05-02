@@ -35,7 +35,8 @@ class MyClient(discord.Client):
     # English Translator
     # Automatically translates non-english messages to English
     async def translate_message(self, message):
-        if translator.detect(message.content).lang != "en":
+        detectedLang = translator.detect(message.content)
+        if detectedLang.lang != "en" and detectedLang.confidence > 0.05:
             translated = translator.translate(message.content, "en")
             await message.reply(f'> *{message.content}*\n`{translated.src} to {translated.dest}`\n{translated.text}', mention_author=False)
 
