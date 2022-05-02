@@ -34,6 +34,7 @@ class MyClient(discord.Client):
 
     # English Translator
     # Automatically translates non-english messages to English
+    # TODO resolve 2000 char limit problem
     async def translate_message(self, message):
         detectedLang = translator.detect(message.content)
         if detectedLang.lang != "en" and detectedLang.confidence > 0.2:
