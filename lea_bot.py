@@ -1,10 +1,12 @@
 # Import necessary modules
 import discord
+from discord.ext import commands
 import logging
 from googletrans import Translator
 
 
 # configure the logging module
+# code taken from the discord.py logging page
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
@@ -19,7 +21,7 @@ class MyClient(discord.Client):
 
     # Executes whenever a message is sent
     async def on_message(self, message): 
-        if message.author == client.user:
+        if message.author == bot.user:
             return
 
         await self.deez_nuts_check(message)
@@ -34,12 +36,18 @@ class MyClient(discord.Client):
 
     # English Translator
     # Automatically translates non-english messages to English
-    # TODO resolve 2000 char limit problem
+    # TODO resolve 2000 char limit problem (possibly use embeds)
     async def translate_message(self, message):
         detectedLang = translator.detect(message.content)
         if detectedLang.lang != "en" and detectedLang.confidence > 0.2:
             translated = translator.translate(message.content, "en")
             await message.reply(f'> *{message.content}*\n`{translated.src} to {translated.dest}: confidence: {detectedLang.confidence}`\n{translated.text}', mention_author=False)
+
+    # TODO commands for translate and help and an admin kill
+
+
+# Commands
+
 
 
 
@@ -65,5 +73,5 @@ translator = Translator()
 
 
 # Run the discord client
-client = MyClient()
-client.run(TOKEN)
+bot = MyClient()
+bot.run(TOKEN)
