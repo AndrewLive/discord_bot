@@ -35,6 +35,7 @@ async def on_message(message):
     await deez_nuts_check(message)
     # await translate_message(message)
 
+    # need this to be able to process commands
     await bot.process_commands(message)
 
     return
@@ -61,6 +62,8 @@ async def translate(ctx, dest='en'):
     return
         
 
+## END BOT FUNCTIONS ##
+
 
 ## FUNCTION IMPLEMENTATIONS ##
 
@@ -80,12 +83,14 @@ async def translate_message(message, dest='en'):
         translated = translator.translate(message.content, dest)
         await message.reply(f'> *{message.content}*\n`{translated.src} to {translated.dest}: confidence: {detectedLang.confidence}`\n{translated.text}', mention_author=False)
 
+## END FUNCTION IMPLEMENTATIONS ##
 
 
+## SETUP ##
 
 # Read file to get the bot token
 # format is {token: <token here>} on the first line of the file
-config_file = open("discord_bot\example_bot.config", "r")
+config_file = open("discord_bot\lea_bot.config", "r")
 TOKEN = config_file.readline().split()[1]
 print(TOKEN)
 config_file.close()
