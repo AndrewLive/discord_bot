@@ -12,5 +12,4 @@ Language Translation
 
 ## Usage
 
-This is just a Python script. It does require a .config file that
-contains the bot's Discord token.  
+This is just a Python script. It does require a .config file that contains the bot's Discord token.  
