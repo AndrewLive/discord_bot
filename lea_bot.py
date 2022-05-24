@@ -62,13 +62,16 @@ async def translate(ctx, dest='en'):
     await translate_message(original_message, dest)
     return
 
+# Sun Tzu "Art of War" Quotes
+# messages with a random "Sun Tzu" quote
 @bot.command(aliases=["st", "Suntzu", "sunTzu", "SunTzu", "sun_tzu"])
 async def suntzu(ctx):
     sun_tzu_message = random.choice(sun_tzu_quotes)
     sun_tzu_message = f'> {sun_tzu_message}-Sun Tzu (The Art of War)'
     await ctx.send(sun_tzu_message)
 
-
+# TODO: make bot commands to reload all required
+# dicts, lists, and etc like deez nuts and sun tzu
         
 
 ## END BOT FUNCTIONS ##
@@ -76,8 +79,36 @@ async def suntzu(ctx):
 
 ## FUNCTION IMPLEMENTATIONS ##
 
+# Initialize deez_nuts dictionary
+def deez_nuts_init():
+    # Read deez_nutz file to get dictionary of deez nutz replies
+    deez_nuts_file = open("discord_bot\deez_nuts.txt", "r", encoding = 'utf-8')
+    deez_nuts_dict = {}
+    for i in deez_nuts_file.readlines():
+        i = i.strip().split(": ")
+        deez_nuts_dict[i[0]] = i[1]
+    deez_nuts_file.close()
+
+    print(deez_nuts_dict)
+    return deez_nuts_dict
+
+# Initialize sun_tzu quotes list
+def sun_tzu_init():
+    # Read sun_tzu file to get list of sun tzu quotes
+    sun_tzu_file = open("discord_bot\sun_tzu.txt", "r", encoding = 'utf-8')
+    sun_tzu_quotes = []
+    for i in sun_tzu_file.readlines():
+        sun_tzu_quotes.append(i)
+    sun_tzu_file.close()
+
+    sun_tzu_quotes.remove("\n")
+    print(sun_tzu_quotes)
+    return sun_tzu_quotes
+
 # Deez Nuts checker
 # Finishes the deez nuts joke based on the message sent
+# TODO: maybe rewrite so that this is a bot method instead
+# of a standalone function
 async def deez_nuts_check(message):
     for substring in deez_nuts_dict:
         if substring in message.content.lower().strip():
@@ -106,29 +137,41 @@ config_file.close()
 
 
 # Read deez_nutz file to get dictionary of deez nutz replies
-deez_nuts_file = open("discord_bot\deez_nuts.txt", "r", encoding = 'utf-8')
-deez_nuts_dict = {}
-for i in deez_nuts_file.readlines():
-    i = i.strip().split(": ")
-    deez_nuts_dict[i[0]] = i[1]
-deez_nuts_file.close()
+#deez_nuts_file = open("discord_bot\deez_nuts.txt", "r", encoding = 'utf-8')
+#deez_nuts_dict = {}
+#for i in deez_nuts_file.readlines():
+#    i = i.strip().split(": ")
+#    deez_nuts_dict[i[0]] = i[1]
+#deez_nuts_file.close()
+#
+#print(deez_nuts_dict)
 
-print(deez_nuts_dict)
+deez_nuts_dict = deez_nuts_init()
 
 
 # Read sun_tzu file to get list of sun tzu quotes
-sun_tzu_file = open("discord_bot\sun_tzu.txt", "r", encoding = 'utf-8')
-sun_tzu_quotes = []
-for i in sun_tzu_file.readlines():
-    sun_tzu_quotes.append(i)
-sun_tzu_file.close()
+#sun_tzu_file = open("discord_bot\sun_tzu.txt", "r", encoding = 'utf-8')
+#sun_tzu_quotes = []
+#for i in sun_tzu_file.readlines():
+#    sun_tzu_quotes.append(i)
+#sun_tzu_file.close()
+#
+#sun_tzu_quotes.remove("\n")
+#print(sun_tzu_quotes)
 
-sun_tzu_quotes.remove("\n")
-print(sun_tzu_quotes)
+sun_tzu_quotes = sun_tzu_init()
+
+# TODO: Currently can't use a command to modify/reload
+# the required dicts.
+# Maybe make the deez nuts and sun tzu quotes a property
+# of the bot object. That way the bot will be able to
+# do reinitialize the needed things
 
 
 
 # Initialize the Translator object
+# TODO: maybe make this a property of the bot instead
+# of a standalone
 translator = Translator()
 
 
