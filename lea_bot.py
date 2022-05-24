@@ -4,6 +4,7 @@ from discord.ext import commands
 import logging
 from googletrans import Translator
 from googletrans import LANGUAGES
+import random
 
 
 # configure the logging module
@@ -60,6 +61,14 @@ async def translate(ctx, dest='en'):
     original_message = await ctx.fetch_message(ctx.message.reference.message_id)
     await translate_message(original_message, dest)
     return
+
+@bot.command(aliases=["st", "Suntzu", "sunTzu", "SunTzu", "sun_tzu"])
+async def suntzu(ctx):
+    sun_tzu_message = random.choice(sun_tzu_quotes)
+    sun_tzu_message = f'> {sun_tzu_message}-Sun Tzu (The Art of War)'
+    await ctx.send(sun_tzu_message)
+
+
         
 
 ## END BOT FUNCTIONS ##
@@ -107,9 +116,26 @@ deez_nuts_file.close()
 print(deez_nuts_dict)
 
 
+# Read sun_tzu file to get list of sun tzu quotes
+sun_tzu_file = open("discord_bot\sun_tzu.txt", "r", encoding = 'utf-8')
+sun_tzu_quotes = []
+for i in sun_tzu_file.readlines():
+    sun_tzu_quotes.append(i)
+sun_tzu_file.close()
+
+sun_tzu_quotes.remove("\n")
+print(sun_tzu_quotes)
+
+
+
 # Initialize the Translator object
 translator = Translator()
 
 
 # Run the discord bot
 bot.run(TOKEN)
+
+
+## TODO: ffmpeg for music
+## TODO: urban dictionary
+## TODO: !anime shitty random name drop
