@@ -8,7 +8,7 @@ I'll add features as I think of them
 ## Current Features
 
 Deez Nuts autocomplete  
-Language Translation
+Language Translation  
 Sun Tzu The Art of War  
 
 ## Usage
