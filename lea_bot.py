@@ -15,7 +15,7 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='l.')
 
 ## BOT FUNCTIONS ##
 
@@ -69,6 +69,38 @@ async def suntzu(ctx):
     sun_tzu_message = random.choice(sun_tzu_quotes)
     sun_tzu_message = f'> {sun_tzu_message}-Sun Tzu (The Art of War)'
     await ctx.send(sun_tzu_message)
+    return
+
+# SCP Retrieval
+# Replies with a link to a specified or random SCP
+@bot.command(aliases=["SCP"])
+async def scp(ctx, arg1 = None, arg2 = None):
+    # number of SCPS there are
+    scp_start = 1
+    scp_end = 6999
+
+    # convert args to int
+    try:
+        if type(arg1) == str:
+            arg1 = int(arg1)
+        if type(arg2) == str:
+            arg2 = int(arg2)
+    except ValueError:
+        pass
+
+
+    # print(type(arg1), type(arg2))
+
+    if arg1 == None:
+        scp_number = random.randint(scp_start, scp_end)
+    elif type(arg1) == int and type(arg2) == int:
+        scp_number = random.randint(arg1, arg2)
+    else:
+        scp_number = arg1
+
+    scp_link = f'https://scp-wiki.wikidot.com/scp-{scp_number}'
+    await ctx.send(scp_link)
+    return
 
 # TODO: make bot commands to reload all required
 # dicts, lists, and etc like deez nuts and sun tzu
@@ -128,6 +160,7 @@ async def translate_message(message, dest='en'):
 
 ## SETUP ##
 
+## TODO: Replace with load_dotenv() and os.dotenv()
 # Read file to get the bot token
 # format is {token: <token here>} on the first line of the file
 config_file = open("discord_bot\lea_bot.config", "r")
@@ -182,3 +215,8 @@ bot.run(TOKEN)
 ## TODO: ffmpeg for music
 ## TODO: urban dictionary
 ## TODO: !anime shitty random name drop
+## TODO: Sorcerer Rogier my beloved
+## TODO: Weather report
+## TODO: SCP links
+## TODO: Help Documentation
+## TODO: Reinitialize Bot
