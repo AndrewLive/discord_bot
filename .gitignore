@@ -39,3 +39,4 @@ Thumbs.db
 # Bot Config Files #
 ####################
 *.config
+*.env
