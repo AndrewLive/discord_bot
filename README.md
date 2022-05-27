@@ -17,4 +17,3 @@ SCP Lookup
 This is just a Python script. It does require a .config file that contains the bot's Discord token in the form:  
 `token: <INSERT TOKEN HERE>`  
 There is currently no way to kill the bot other than killing the Python program outright.  
-
