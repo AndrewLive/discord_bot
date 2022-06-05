@@ -15,7 +15,8 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-bot = commands.Bot(command_prefix='l.')
+bot_intents = discord.Intents.all()
+bot = commands.Bot(command_prefix='l.', intents = bot_intents)
 
 ## BOT FUNCTIONS ##
 
@@ -32,6 +33,8 @@ async def on_ready():
 async def on_message(message): 
     if message.author == bot.user:
         return
+
+    print(message.content)
 
     await deez_nuts_check(message)
     # await translate_message(message)
@@ -59,6 +62,7 @@ async def translate(ctx, dest='en'):
 
     # print(dest)
     original_message = await ctx.fetch_message(ctx.message.reference.message_id)
+    print(original_message.content)
     await translate_message(original_message, dest)
     return
 
@@ -121,7 +125,7 @@ def deez_nuts_init():
         deez_nuts_dict[i[0]] = i[1]
     deez_nuts_file.close()
 
-    print(deez_nuts_dict)
+    # print(deez_nuts_dict)
     return deez_nuts_dict
 
 # Initialize sun_tzu quotes list
@@ -134,7 +138,7 @@ def sun_tzu_init():
     sun_tzu_file.close()
 
     sun_tzu_quotes.remove("\n")
-    print(sun_tzu_quotes)
+    # print(sun_tzu_quotes)
     return sun_tzu_quotes
 
 # Deez Nuts checker
@@ -151,7 +155,8 @@ async def deez_nuts_check(message):
 # TODO resolve 2000 char limit problem (possibly use embeds)
 async def translate_message(message, dest='en'):
     detectedLang = translator.detect(message.content)
-    if detectedLang.lang != dest and detectedLang.confidence > 0.2:
+
+    if detectedLang.lang != dest:
         translated = translator.translate(message.content, dest)
         await message.reply(f'> *{message.content}*\n`{translated.src} to {translated.dest}: confidence: {detectedLang.confidence}`\n{translated.text}', mention_author=False)
 
@@ -217,6 +222,9 @@ bot.run(TOKEN)
 ## TODO: !anime shitty random name drop
 ## TODO: Sorcerer Rogier my beloved
 ## TODO: Weather report
-## TODO: SCP links
 ## TODO: Help Documentation
 ## TODO: Reinitialize Bot
+## TODO: command that lets people add sun tzu quotes
+    ## maybe put in separate txt file for approval
+## TODO: slash commands
+## TODO: USE COGS
