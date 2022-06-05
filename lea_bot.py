@@ -158,7 +158,7 @@ async def translate_message(message, dest='en'):
 
     if detectedLang.lang != dest:
         translated = translator.translate(message.content, dest)
-        await message.reply(f'> *{message.content}*\n`{translated.src} to {translated.dest}: confidence: {detectedLang.confidence}`\n{translated.text}', mention_author=False)
+        await message.reply(f'> *{message.content}*\n`{translated.src} to {translated.dest}\n{translated.text}', mention_author=False)
 
 ## END FUNCTION IMPLEMENTATIONS ##
 
